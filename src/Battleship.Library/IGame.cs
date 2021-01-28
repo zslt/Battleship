@@ -2,8 +2,8 @@ namespace Battleship.BLL
 {
     public interface IGame
     {
-        //start
+        void Start();
 
-        //fire
+        bool Fire(Location location);
     }
 }
