@@ -6,11 +6,12 @@ namespace Battleship.BLL.Models
 {
     public class Ship
     {
-        //available locations
+        //available positions
 
-        //positon
+        //position
 
         //health
-        
+
+        //set position        
     }
 }
