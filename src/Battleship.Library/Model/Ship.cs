@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Battleship.BLL.Models
+namespace Battleship.BLL.Model
 {
     public class Ship
     {

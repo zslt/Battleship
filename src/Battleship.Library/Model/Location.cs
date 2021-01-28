@@ -1,6 +1,6 @@
 using System;
 
-namespace Battleship.BLL.Models
+namespace Battleship.BLL.Model
 {
     public class Location
     {
