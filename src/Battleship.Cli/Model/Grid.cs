@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Battleship.BLL.Model;
+using Battleship.Library.Model;
 
-namespace Battleship.Model
+namespace Battleship.Cli.Model
 {
     public class Grid
     {

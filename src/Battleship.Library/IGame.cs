@@ -1,4 +1,6 @@
-namespace Battleship.BLL
+using Battleship.Library.Model;
+
+namespace Battleship.Library
 {
     public interface IGame
     {

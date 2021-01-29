@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Battleship.BLL.Model
+namespace Battleship.Library.Model
 {
     public class BattleshipConfiguration
     {

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Battleship.BLL.Model;
+using Battleship.Library.Model;
 
-namespace Battleship.BLL
+namespace Battleship.Library
 {
     public class Game : IGame
     {

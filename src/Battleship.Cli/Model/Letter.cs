@@ -1,4 +1,4 @@
-namespace Battleship.Model
+namespace Battleship.Cli.Model
 {
     public enum Letter
     {

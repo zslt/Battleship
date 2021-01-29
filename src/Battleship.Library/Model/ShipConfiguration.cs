@@ -1,4 +1,4 @@
-namespace Battleship.BLL.Model
+namespace Battleship.Library.Model
 {
     public class ShipConfiguration
     {
