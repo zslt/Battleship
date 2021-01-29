@@ -62,7 +62,9 @@ namespace Battleship.Cli
                             ? int.Parse(input.Substring(1, 1)) - 1
                             : int.Parse(input.Substring(1, 2)) - 1;
 
-                        game.Fire(new Location(row, column));
+                        var isHit = game.Fire(new Location(row, column));
+
+                        grid.GridData[row, column] = isHit ? 2 : 1;
 
                         input = null;
                         Console.WriteLine("\n" + grid.ToString());
