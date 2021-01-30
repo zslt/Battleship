@@ -4,9 +4,10 @@ using System.Linq;
 
 namespace Battleship.Library.Model
 {
-    public class Ship
+    internal class Ship
     {
-        public IList<IList<Location>> AvailablePositions { get; private set; }        
+        private IList<IList<Location>> availablePositions;
+
         public IList<Location> Position { get; private set; }
         public string Name { get; private set; }
         public int Health { get; private set; }
@@ -17,30 +18,31 @@ namespace Battleship.Library.Model
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (name == "") throw new ArgumentException(nameof(name));
             
+            Name = name;            
             Health = shipSize;
             
-            AvailablePositions = new List<IList<Location>>();
+            this.availablePositions = new List<IList<Location>>();
 
             for (int i = 0; i < gridSize; i++)
             {
                 for (int j = 0; j <= gridSize - shipSize; j++)
                 {
                     //horizontal
-                    AvailablePositions.Add(Enumerable.Range(0, shipSize).Select(k => new Location(i, j + k)).ToList());
+                    availablePositions.Add(Enumerable.Range(0, shipSize).Select(k => new Location(i, j + k)).ToList());
                     //vertical
-                    AvailablePositions.Add(Enumerable.Range(0, shipSize).Select(k => new Location(j + k, i)).ToList());
+                    availablePositions.Add(Enumerable.Range(0, shipSize).Select(k => new Location(j + k, i)).ToList());
                 }
             }
         }
 
         public void SetPosition(int? index = null)
         {
-            Position = AvailablePositions[index ?? new Random().Next(AvailablePositions.Count)];
+            Position = availablePositions[index ?? new Random().Next(availablePositions.Count)];
         }
 
         public void RemovePosition(IList<Location> occupied)
         {            
-            AvailablePositions = AvailablePositions
+            availablePositions = availablePositions
                 .Where(available =>
                     occupied.All(oloc => 
                     !available.Any(aloc => aloc == oloc)))
@@ -57,7 +59,7 @@ namespace Battleship.Library.Model
             if (Health > 0)
             {
                 Health -= 1;
-            }
+            }            
         }
     }
 }

@@ -21,62 +21,16 @@ namespace Battleship.Cli
             var section = appsettings.GetSection(nameof(BattleshipConfiguration));
             var config = section.Get<BattleshipConfiguration>();
 
-            var game = new Game(config);
-            game.Start();
-            GameLoop(game, new Grid(config.GridSize));
-
-            Console.WriteLine("Game ends.");
+            //TODO: validate size e.g, max size is 10, 0 is invalid, shipSize has to fit gridSize
+            
+            var consoleGame = new ConsoleGame(new Game(config), new Grid(config.GridSize));
+            
+            consoleGame.Start();
 
             if (Debugger.IsAttached)
             {
                 Debugger.Break();
             }
-        }
-
-        public static void GameLoop(Game game, Grid grid)
-        {
-            Console.WriteLine(grid.ToString());
-            Console.WriteLine("Press ESC to stop. Or fire at will!");
-
-            string input = null;
-
-            while (true)
-            {
-                var key = Console.ReadKey(true);
-
-                switch (key.Key)
-                {
-                    case ConsoleKey.Escape:
-                        return;
-                    case ConsoleKey.Backspace:
-                        if (!string.IsNullOrEmpty(input))
-                        {
-                            input = input.Substring(0, input.Length - 1);
-                        }
-                        Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
-                        Console.Write(input);
-                        break;
-                    case ConsoleKey.Enter:
-                        var column = (int)Enum.Parse(typeof(Letter), input.Substring(0,1), true);
-                        var row = input.Length == 2
-                            ? int.Parse(input.Substring(1, 1)) - 1
-                            : int.Parse(input.Substring(1, 2)) - 1;
-
-                        var isHit = game.Fire(new Location(row, column));
-
-                        grid.GridData[row, column] = isHit ? 2 : 1;
-
-                        input = null;
-                        Console.WriteLine("\n" + grid.ToString());
-                        Console.WriteLine("Press ESC to stop. Or fire at will!");
-                        break;
-                    default:
-                        input += key.KeyChar;
-                        Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
-                        Console.Write(input);
-                        break;
-                }
-            }
-        }
+        } 
     }
 }

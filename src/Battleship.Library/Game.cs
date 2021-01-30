@@ -8,8 +8,11 @@ namespace Battleship.Library
     public class Game : IGame
     {
         private readonly BattleshipConfiguration config;
-
-        public IList<Ship> Ships { get; private set; }
+        private IList<Ship> ships;
+        private int remainingShips;
+        
+        public event ShipSunkHandler ShipSunk;        
+        public event EventHandler AllShipsSunk;
 
         public Game(BattleshipConfiguration config)
         {
@@ -19,34 +22,60 @@ namespace Battleship.Library
         public void Start()
         {
             //TODO: validate number of ships >1 and <=5
-            Ships = config.Ships
-                .SelectMany(x => Enumerable.Range(0, x.Amount)
+            ships = config.Ships
+                .SelectMany(x => Enumerable.Range(0, x.Quantity)
                 .Select(y => new Ship(config.GridSize, x.Size, x.Name)))
                 .ToList();
 
-            for (int i = 0; i < Ships.Count; i++)
-            {
-                Ships[i].SetPosition();
+            remainingShips = ships.Count;
 
-                for (int j = 1; j < Ships.Count; j++)
+            for (int i = 0; i < ships.Count; i++)
+            {
+                ships[i].SetPosition();
+
+                for (int j = 1; j < ships.Count; j++)
                 {
-                    Ships[j].RemovePosition(Ships[i].Position);
+                    ships[j].RemovePosition(ships[i].Position);
                 }
             }
         }
 
         public bool Fire(Location location)
         {
-            foreach (var ship in Ships)
+            foreach (var ship in ships)
             {
                 if (ship.IsHit(location))
                 {
                     ship.DecrementHealth();
+
+                    if (ship.Health == 0)
+                    {
+                        OnShipSunk(ship);
+                        remainingShips -= 1;
+                    }
+
+                    if (remainingShips == 0)
+                    {
+                        OnAllShipsSunk();
+                    }
+
                     return true;
                 }
             }
 
             return false;
+        }
+
+        internal void OnShipSunk(Ship ship)
+        {
+            ShipSunkHandler handler = ShipSunk;
+            handler?.Invoke(this, new ShipSunkEventArgs { Name = ship.Name });
+        }
+
+        internal void OnAllShipsSunk()
+        {
+            EventHandler handler = AllShipsSunk;
+            handler?.Invoke(this, EventArgs.Empty);
         }
     }        
 }
