@@ -1,10 +1,10 @@
 # Battleship
 
-This is a battlship game repository. It contains a console application project adn a game logic library. They target the .net5.0 framework.
+This is a battlship game repository. It contains a console application project and a game logic library. They target the .net5.0 framework.
 
 ## Usage
 
-The console application can be published (/artifacts path) as a self-contained single file executable with the command.
+The console application can be published (/artifacts path) as a self-contained single file executable.
 Windows example:
 ```
 dotnet publish -c Release -r win-x64
