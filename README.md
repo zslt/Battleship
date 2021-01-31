@@ -5,7 +5,7 @@ This is a battlship game repository. It contains a console application project a
 ## Usage
 
 The console application can be published (/artifacts path) as a self-contained single file executable.
-Windows example:
+<br/>Windows example:
 ```
 dotnet publish -c Release -r win-x64
 ```
@@ -16,7 +16,7 @@ dotnet publish -c Release -r linux-x64
 Alternatively, you can run the publish.ps script (ps script is not tested yet, development is done on Linux) or the publish.sh script.
 
 The console application can be configured with an appsettings.json file.
-Example:
+<br/>Example:
 ```
 {
     "BattleshipConfiguration": {
