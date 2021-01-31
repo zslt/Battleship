@@ -14,11 +14,10 @@ namespace Battleship.Library.Model
 
         public Ship(int gridSize, int shipSize, string name)
         {
-            //TODO: validate size e.g, max size is 10, 0 is invalid, shipSize has to fit gridSize
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (name == "") throw new ArgumentException(nameof(name));
             
-            Name = name;            
+            Name = name;
             Health = shipSize;
             
             this.availablePositions = new List<IList<Location>>();

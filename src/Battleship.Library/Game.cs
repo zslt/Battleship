@@ -17,11 +17,11 @@ namespace Battleship.Library
         public Game(BattleshipConfiguration config)
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
+            config.Validate();
         }
 
         public void Start()
         {
-            //TODO: validate number of ships >1 and <=5
             ships = config.Ships
                 .SelectMany(x => Enumerable.Range(0, x.Quantity)
                 .Select(y => new Ship(config.GridSize, x.Size, x.Name)))

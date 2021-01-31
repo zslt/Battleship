@@ -14,11 +14,29 @@ namespace Battleship.Cli.Model
 
         public int[,] GridData { get; }
 
+        public IList<Letter> ColumnLetters { get; }
+
         public Grid(int size)
         {
-            //TODO: validate, max size 10
-            Size = size;
+            if (size == 0)
+            {
+                throw new ArgumentException($"{nameof(size)} cannot be zero.");
+            }
 
+            if (size < 0)
+            {
+                throw new ArgumentException($"{nameof(size)} cannot be negative.");
+            }
+
+            if (size > maxSize)
+            {
+                throw new ArgumentException($"{nameof(size)} has the maximum value of {maxSize}.");
+            }
+
+            Size = size;
+            ColumnLetters = new List<Letter>((Letter[])Enum.GetValues(typeof(Letter)))
+                .Take(Size)
+                .ToList();
             GridData = new int[size, size];
 
             for (int i = 0; i < size; i++)
@@ -31,10 +49,9 @@ namespace Battleship.Cli.Model
         }
 
         public override string ToString()
-        {
-            var columnLetters = new List<Letter>((Letter[])Enum.GetValues(typeof(Letter))).Take(Size);
-            var text = ("    " + string.Join(" ", columnLetters.Select(x => x.ToString())) + "\n   ");
-            text += string.Concat(Enumerable.Repeat("__", columnLetters.Count())) + "\n";
+        {            
+            var text = ("    " + string.Join(" ", ColumnLetters.Select(x => x.ToString())) + "\n   ");
+            text += string.Concat(Enumerable.Repeat("__", ColumnLetters.Count())) + "\n";
 
             for (int i = 0; i < Size; i++)
             {

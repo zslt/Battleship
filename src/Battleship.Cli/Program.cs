@@ -20,8 +20,6 @@ namespace Battleship.Cli
 
             var section = appsettings.GetSection(nameof(BattleshipConfiguration));
             var config = section.Get<BattleshipConfiguration>();
-
-            //TODO: validate size e.g, max size is 10, 0 is invalid, shipSize has to fit gridSize
             
             var consoleGame = new ConsoleGame(new Game(config), new Grid(config.GridSize));
             

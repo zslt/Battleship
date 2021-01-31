@@ -36,18 +36,17 @@ namespace Battleship.Cli
         public void Start()
         {
             game.ShipSunk += (sender, e) => Console.WriteLine($"\n{e.Name} has sunk!");
-            game.AllShipsSunk += (sende, e) =>
+            game.AllShipsSunk += (sender, e) =>
             {
-                Console.WriteLine($"\nAll ships have sunk!");
-                Console.WriteLine("Press any keys to exit...");
+                Console.WriteLine($"All ships have sunk!");
+                Console.WriteLine("Press any key to exit...");
                 Console.ReadKey();
                 Environment.Exit(0);
             };
 
             game.Start();
 
-            Console.WriteLine(grid.ToString());
-            Console.WriteLine("Press ESC to stop. Or fire at will!");
+            ConsoleWriteGame();
 
             var input = "";
 
@@ -58,18 +57,19 @@ namespace Battleship.Cli
                 switch (key.Key)
                 {
                     case ConsoleKey.Escape:
+                        ClearConsoleLine();
                         Console.WriteLine("Game ends.");
                         return;
                     case ConsoleKey.Enter:
                         UpdateGame(input);
                         input = "";
-                        Console.WriteLine("\n" + grid.ToString());
-                        Console.WriteLine("Press ESC to stop. Or fire at will!");
+                        Console.Write("\n");
+                        ConsoleWriteGame();
                         break;
                     case ConsoleKey.Backspace:
                     default:
                         input = UpdateInput(input, key);
-                        Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
+                        ClearConsoleLine();
                         Console.Write(input);                        
                         break;
                 }
@@ -79,13 +79,14 @@ namespace Battleship.Cli
         private void UpdateGame(string input)
         {
             if (input == "") return;
+            if (input.Length < 2 || input.Length > 3) return;
 
-            var column = (int)Enum.Parse(typeof(Letter), input.Substring(0,1), true);
+            var column = (int)Enum.Parse<Letter>(input.Substring(0,1), true);
             var row = input.Length == 2
                 ? int.Parse(input.Substring(1, 1)) - 1
                 : int.Parse(input.Substring(1, 2)) - 1;
 
-            grid.GridData[row, column] = game.Fire(new Location(row, column)) ? 2 : 1;                      
+            grid.GridData[row, column] = game.Fire(new Location(row, column)) ? 2 : 1;
         }
 
         private string UpdateInput(string input, ConsoleKeyInfo key)
@@ -99,7 +100,10 @@ namespace Battleship.Cli
             }
             else
             {
-                if (input.Length == 0 && validLetterKeys.Contains(key.Key))
+                if (input.Length == 0
+                    && validLetterKeys.Contains(key.Key)
+                    && Enum.TryParse<Letter>(key.KeyChar.ToString(), true, out var letter)
+                    && grid.ColumnLetters.Contains(letter))
                 {
                     return input + key.KeyChar.ToString();
                 }
@@ -122,6 +126,18 @@ namespace Battleship.Cli
             }
 
             return input;
+        }
+
+        private void ClearConsoleLine()
+        {
+            Console.Write("\r" + new string(' ', Console.BufferWidth) + "\r");
+        }
+
+        private void ConsoleWriteGame()
+        {
+            Console.WriteLine(grid.ToString());
+            Console.WriteLine("1 is a miss. 2 is a hit.");
+            Console.WriteLine("Press ESC to stop. Or fire at will!");
         }
     }
 }
