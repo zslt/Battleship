@@ -38,7 +38,7 @@ namespace Battleship.Cli
             game.ShipSunk += (sender, e) => Console.WriteLine($"\n{e.Name} has sunk!");
             game.AllShipsSunk += (sender, e) =>
             {
-                Console.WriteLine($"All ships have sunk!");
+                Console.WriteLine($"Victory! All ships have sunk!");
                 Console.WriteLine("Press any key to exit...");
                 Console.ReadKey();
                 Environment.Exit(0);

@@ -11,7 +11,7 @@ namespace Battleship.Library
         private IList<Ship> ships;
         private int remainingShips;
         
-        public event ShipSunkHandler ShipSunk;        
+        public event EventHandler<ShipSunkEventArgs> ShipSunk;        
         public event EventHandler AllShipsSunk;
 
         public Game(BattleshipConfiguration config)
@@ -68,7 +68,7 @@ namespace Battleship.Library
 
         internal void OnShipSunk(Ship ship)
         {
-            ShipSunkHandler handler = ShipSunk;
+            EventHandler<ShipSunkEventArgs> handler = ShipSunk;
             handler?.Invoke(this, new ShipSunkEventArgs { Name = ship.Name });
         }
 
