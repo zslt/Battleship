@@ -16,6 +16,11 @@ namespace Battleship.Library
                 throw new ArgumentException($"{nameof(battleshipConfiguration.GridSize)} cannot be zero.");
             }
 
+            if (battleshipConfiguration.GridSize < 0)
+            {
+                throw new ArgumentException($"{nameof(battleshipConfiguration.GridSize)} cannot be negative.");
+            }
+
             if (battleshipConfiguration.GridSize > maxSize)
             {
                 throw new ArgumentException($"{nameof(battleshipConfiguration.GridSize)} has the maximum value of {maxSize}.");
@@ -29,6 +34,16 @@ namespace Battleship.Library
             if (battleshipConfiguration.Ships.Any(x => x.Size > battleshipConfiguration.GridSize))
             {
                 throw new ArgumentException($"A ship cannot have greater size than the gird size.");
+            }
+
+            if (battleshipConfiguration.Ships.Any(x => x.Size == 0))
+            {
+                throw new ArgumentException($"A ship cannot have size zero.");
+            }
+
+            if (battleshipConfiguration.Ships.Any(x => x.Size < 0))
+            {
+                throw new ArgumentException($"A ship cannot have negative size.");
             }
 
             if (battleshipConfiguration.Ships.Sum(x => x.Size * x.Quantity) > Math.Pow(battleshipConfiguration.GridSize, 2))
