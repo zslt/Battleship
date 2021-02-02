@@ -6,9 +6,8 @@ using Battleship.Library.Model;
 
 namespace Battleship.Library.Test
 {
-    public class ConfigurationValidatorTests
+    public class ShipTests
     {
-
         [Test]
         public void Ship_sets_last_position()
         {

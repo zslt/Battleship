@@ -8,7 +8,6 @@ namespace Battleship.Library.Test
 {
     public class ConfigurationValidatorTests
     {
-
         [Test]
         public void Grid_size_cannot_be_negative()
         {
