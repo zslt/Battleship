@@ -39,7 +39,7 @@ namespace Battleship.Library.Test
         }
 
         [Test]
-        public void Game_raises_event_when_all_ship_have_sunk()
+        public void Game_raises_event_when_all_ships_have_sunk()
         {
             // Arrange
             var game = new Game(new BattleshipConfiguration

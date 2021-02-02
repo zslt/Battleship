@@ -13,7 +13,7 @@ Linux example:
 ```
 dotnet publish -c Release -r linux-x64
 ```
-Alternatively, you can run the publish.ps script (ps script is not tested yet, development is done on Linux) or the publish.sh script.
+Alternatively, you can run the publish.ps1 script (the powershell script is not tested yet, development is done on Linux) or the publish.sh script.
 
 The console application can be configured with an appsettings.json file.
 <br/>Example:
