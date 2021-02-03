@@ -12,7 +12,12 @@ namespace Battleship.Library.Test
         public void Ship_sets_last_position()
         {
             // Arrange
-            var ship = new Ship(2, 1, "ship");
+            var shipFactory = new FirsAvailablePositionShipFactory(2);
+            var ship = shipFactory.Create(new ShipConfiguration
+            {
+                Name = "ship",
+                Size = 1
+            });
             ship.RemovePosition(new List<Location>()
             {
                 new Location(0, 0),
@@ -21,7 +26,7 @@ namespace Battleship.Library.Test
             });
 
             // Act
-            ship.SetPosition(0);
+            ship.SetPosition();
 
             // Assert
             Assert.AreEqual(ship.Position, new List<Location>() { new Location(1, 1) });
@@ -31,7 +36,12 @@ namespace Battleship.Library.Test
         public void Ship_cannot_set_invalid_position()
         {
             // Arrange
-            var ship = new Ship(2, 1, "ship");
+            var shipFactory = new FirsAvailablePositionShipFactory(2);
+            var ship = shipFactory.Create(new ShipConfiguration
+            {
+                Name = "ship",
+                Size = 1
+            });
             ship.RemovePosition(new List<Location>()
             {
                 new Location(0, 0),
@@ -41,7 +51,7 @@ namespace Battleship.Library.Test
             });
 
             // Act and Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => ship.SetPosition(0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => ship.SetPosition());
         }
     }
 }

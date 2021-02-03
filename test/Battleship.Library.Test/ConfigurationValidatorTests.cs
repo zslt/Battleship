@@ -27,7 +27,7 @@ namespace Battleship.Library.Test
             };
 
             // Act and Assert
-            var exception = Assert.Throws<ArgumentException>(() => new Game(config));
+            var exception = Assert.Throws<ArgumentException>(() => config.Validate());
             Assert.That(exception.Message, Is.EqualTo("GridSize cannot be negative."));
         }
 
@@ -50,7 +50,7 @@ namespace Battleship.Library.Test
             };
 
             // Act and Assert
-            var exception = Assert.Throws<ArgumentException>(() => new Game(config));
+            var exception = Assert.Throws<ArgumentException>(() => config.Validate());
             Assert.That(exception.Message, Is.EqualTo("GridSize cannot be zero."));
         }
 
@@ -73,7 +73,7 @@ namespace Battleship.Library.Test
             };
 
             // Act and Assert
-            var exception = Assert.Throws<ArgumentException>(() => new Game(config));
+            var exception = Assert.Throws<ArgumentException>(() => config.Validate());
             Assert.That(exception.Message, Is.EqualTo("GridSize has the maximum value of 10."));
         }
 
@@ -96,7 +96,7 @@ namespace Battleship.Library.Test
             };
 
             // Act and Assert
-            var exception = Assert.Throws<ArgumentException>(() => new Game(config));
+            var exception = Assert.Throws<ArgumentException>(() => config.Validate());
             Assert.That(exception.Message, Is.EqualTo("A ship cannot have greater size than the gird size."));
         }
 
@@ -119,7 +119,7 @@ namespace Battleship.Library.Test
             };
 
             // Act and Assert
-            var exception = Assert.Throws<ArgumentException>(() => new Game(config));
+            var exception = Assert.Throws<ArgumentException>(() => config.Validate());
             Assert.That(exception.Message, Is.EqualTo("A ship cannot have size zero."));
         }
 
@@ -134,7 +134,7 @@ namespace Battleship.Library.Test
             };
 
             // Act and Assert
-            var exception = Assert.Throws<ArgumentException>(() => new Game(config));
+            var exception = Assert.Throws<ArgumentException>(() => config.Validate());
             Assert.That(exception.Message, Is.EqualTo("Ships must have at leas one ship."));
         }
 
@@ -157,7 +157,7 @@ namespace Battleship.Library.Test
             };
 
             // Act and Assert
-            var exception = Assert.Throws<ArgumentException>(() => new Game(config));
+            var exception = Assert.Throws<ArgumentException>(() => config.Validate());
             Assert.That(exception.Message, Is.EqualTo("Total ship size is larger than available space on the gird."));
         }
     }

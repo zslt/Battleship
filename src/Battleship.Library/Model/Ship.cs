@@ -4,15 +4,17 @@ using System.Linq;
 
 namespace Battleship.Library.Model
 {
-    internal class Ship
+    public class Ship
     {
+        private readonly bool randomPositioning;
+        
         private IList<IList<Location>> availablePositions;
 
         public IList<Location> Position { get; private set; }
         public string Name { get; private set; }
         public int Health { get; private set; }
 
-        public Ship(int gridSize, int shipSize, string name)
+        public Ship(int gridSize, int shipSize, string name, bool randomPositioning = true)
         {
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (name == "") throw new ArgumentException(nameof(name));
@@ -34,9 +36,9 @@ namespace Battleship.Library.Model
             }
         }
 
-        public void SetPosition(int? index = null)
+        public void SetPosition()
         {
-            Position = availablePositions[index ?? new Random().Next(availablePositions.Count)];
+            Position = availablePositions[randomPositioning ? new Random().Next(availablePositions.Count) : 0];
         }
 
         public void RemovePosition(IList<Location> occupied)

@@ -21,7 +21,9 @@ namespace Battleship.Cli
             var section = appsettings.GetSection(nameof(BattleshipConfiguration));
             var config = section.Get<BattleshipConfiguration>();
             
-            var consoleGame = new ConsoleGame(new Game(config), new Grid(config.GridSize));
+            var consoleGame = new ConsoleGame(
+                new Game(config, new RandomPositionShipFactory(config.GridSize)),
+                new Grid(config.GridSize));
             
             consoleGame.Start();
 

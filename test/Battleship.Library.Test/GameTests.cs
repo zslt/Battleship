@@ -12,7 +12,7 @@ namespace Battleship.Library.Test
         public void Game_raises_event_when_a_ship_sinks()
         {
             // Arrange
-            var game = new Game(new BattleshipConfiguration
+            var config = new BattleshipConfiguration
             {
                 GridSize = 1,
                 Ships = new List<ShipConfiguration>()
@@ -23,8 +23,9 @@ namespace Battleship.Library.Test
                         Quantity = 1,
                         Size = 1,                        
                     }
-                } 
-            });
+                }
+            };
+            var game = new Game(config, new FirsAvailablePositionShipFactory(config.GridSize));
 
             var shipSunkRaised = false;
             game.ShipSunk += (o,e) => shipSunkRaised = true;
@@ -42,7 +43,7 @@ namespace Battleship.Library.Test
         public void Game_raises_event_when_all_ships_have_sunk()
         {
             // Arrange
-            var game = new Game(new BattleshipConfiguration
+            var config = new BattleshipConfiguration
             {
                 GridSize = 1,
                 Ships = new List<ShipConfiguration>()
@@ -54,7 +55,8 @@ namespace Battleship.Library.Test
                         Size = 1,                        
                     }
                 } 
-            });
+            };
+            var game = new Game(config, new FirsAvailablePositionShipFactory(config.GridSize));
 
             var allShipsSunkRaised = false;
             game.AllShipsSunk += (o,e) => allShipsSunkRaised = true;

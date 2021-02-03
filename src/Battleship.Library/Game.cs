@@ -8,23 +8,26 @@ namespace Battleship.Library
     public class Game : IGame
     {
         private readonly BattleshipConfiguration config;
+        private readonly IShipFactory shipFactory;
+
         private IList<Ship> ships;
         private int remainingShips;
         
         public event EventHandler<ShipSunkEventArgs> ShipSunk;        
         public event EventHandler AllShipsSunk;
 
-        public Game(BattleshipConfiguration config)
+        public Game(BattleshipConfiguration config, IShipFactory shipFactory)
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
             config.Validate();
+            this.shipFactory = shipFactory ?? throw new ArgumentNullException(nameof(shipFactory));
         }
 
         public void Start()
         {
             ships = config.Ships
                 .SelectMany(x => Enumerable.Range(0, x.Quantity)
-                .Select(y => new Ship(config.GridSize, x.Size, x.Name)))
+                    .Select(y => shipFactory.Create(x)))
                 .ToList();
 
             remainingShips = ships.Count;

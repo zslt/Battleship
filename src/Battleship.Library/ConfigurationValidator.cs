@@ -26,6 +26,11 @@ namespace Battleship.Library
                 throw new ArgumentException($"{nameof(battleshipConfiguration.GridSize)} has the maximum value of {maxSize}.");
             }
 
+            if (battleshipConfiguration.Ships.Any(x => string.IsNullOrEmpty(x.Name)))
+            {
+                throw new ArgumentException($"A ship must have a name.");
+            }
+
             if (!battleshipConfiguration.Ships.Any())
             {
                 throw new ArgumentException($"{nameof(battleshipConfiguration.Ships)} must have at leas one ship.");
